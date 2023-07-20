@@ -2,14 +2,16 @@ global:
   images:
     constant:
       BIOFORMAT: cytomine/bioformat:v1.2.0
-      CORE: cytomine/core:v4.3.5-beta.6
+      CORE: cytomineuliege/core:4.0.0-ms
+      ELASTICSEARCH: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+      LOGSTASH: docker.elastic.co/logstash/logstash:8.6.2
       MONGO: mongo:4.4.18-focal
       NGINX: cytomine/nginx:1.22.1-1.2.0
       PIMS_CACHE: redis:7.0.8
-      PIMS: cytomine/pims:v0.13.6-beta.1
-      POSTGIS: cytomine/postgis:15-3.3-alpine-1.2.0
+      PIMS: cytomine/pims-ce-package:0.0.1
+      POSTGIS: cytomine/postgis:15-3.3-alpine-1.2.1
       RABBITMQ: rabbitmq:3.10
-      WEB_UI: cytomine/web_ui:v2.5.0-beta.2
+      WEB_UI: cytomineuliege/web_ui:2.0.0-ms
 
   urls: # add these urls to your /etc/hosts (mapping nginx container ip)
     constant:
@@ -27,6 +29,8 @@ global:
     constant: 
       WEB_UI: web_ui
       CORE: core:8080
+      ELASTICSEARCH: elasticsearch
+      LOGSTASH: logstash
       PIMS: pims:5000
       RABBITMQ: rabbitmq
       BIOFORMAT: bioformat
@@ -39,6 +43,10 @@ global:
     constant:
       IMAGES: /data/images
       UPLOADED: /tmp/uploaded
+
+  elasticsearch:
+    constant:
+      PORT: 9200
 
   javamelody:
     constant:
@@ -129,6 +137,16 @@ services:
         URL_IMS2: urls_with_scheme.IMAGE_SERVER
         INSTANCE_HOST_WEBSITE_URL: urls_with_scheme.CORE
         STORAGE_PATH: container_paths.IMAGES
+
+    logstash:
+      global:
+        ELASTICSEARCH_HOST: internal_docker_urls.ELASTICSEARCH
+        ELASTICSEARCH_PORT: elasticsearch.PORT
+        POSTGIS_DB_NAME: postgres.DB_NAME
+        POSTGIS_HOST: internal_docker_urls.POSTGIS
+        POSTGIS_PASS: postgres.PASS
+        POSTGIS_PORT: postgres.PORT
+        POSTGIS_USER: postgres.USER
 
     mongo:
       global:
