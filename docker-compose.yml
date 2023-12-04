@@ -32,6 +32,17 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  cbir:
+    image: $IMAGES_CBIR
+    container_name: cbir
+    restart: unless-stopped
+    ports:
+      - "6000:6000"
+    volumes:
+      - $HOST_PATHS_CBIR_MODEL:/weights
+    depends_on:
+      - pims-cache
+
   bioformat:
     image: $IMAGES_BIOFORMAT
     container_name: bioformat

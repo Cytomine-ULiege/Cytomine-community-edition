@@ -162,4 +162,15 @@ http {
             root   html;
         }
     }
+    server {
+        client_max_body_size 0;
+        listen       $NGINX_LISTEN_PORT;
+        server_name  $URLS_CBIR;
+
+        location / {
+            add_header 'Access-Control-Allow-Origin' '*';
+            proxy_set_header Host $host;
+            proxy_pass http://$INTERNAL_URLS_CBIR;
+        }
+    }
 }

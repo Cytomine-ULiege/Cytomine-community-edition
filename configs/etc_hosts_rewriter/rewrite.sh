@@ -44,4 +44,11 @@ else
     echo $entry >> /local_etc/hosts || exit 3
     echo "Added '$entry' to /etc/hosts"
   fi
+
+  if [ ! -z $URL_CBIR ]; then
+    sed -i "/$URL_CBIR/d" /local_etc/hosts || exit 2
+    entry="$IP $URL_CBIR"
+    echo $entry >> /local_etc/hosts || exit 3
+    echo "Added '$entry' to /etc/hosts"
+  fi
 fi
