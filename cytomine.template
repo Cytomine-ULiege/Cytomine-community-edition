@@ -151,6 +151,7 @@ services:
         INTERNAL_URLS_CBIR: internal_docker_urls.CBIR
         INTERNAL_URLS_CORE: internal_docker_urls.CORE
         INTERNAL_URLS_IMS: internal_docker_urls.PIMS
+        URLS_CBIR: urls.CBIR
         URLS_CORE: urls.CORE
         URLS_IMAGE_SERVER: urls.IMAGE_SERVER
         URLS_UPLOAD: urls.UPLOAD
