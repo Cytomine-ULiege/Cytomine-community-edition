@@ -40,8 +40,19 @@ services:
       - "6000:6000"
     volumes:
       - $HOST_PATHS_CBIR_MODEL:/weights
+      - cbir_data:$CONTAINER_PATHS_CBIR_DATA
     depends_on:
-      - pims-cache
+      - redis
+
+  redis:
+    image: $IMAGES_PIMS_CACHE
+    container_name: redis
+    command: --port 6380
+    restart: unless-stopped
+    ports:
+      - "6380:6380"
+    volumes:
+      - redis_data:/data
 
   bioformat:
     image: $IMAGES_BIOFORMAT
@@ -119,3 +130,5 @@ volumes:
   postgis_data:
   images_data:
   download_data:
+  cbir_data:
+  redis_data:

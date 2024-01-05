@@ -40,6 +40,7 @@ global:
       NGINX: nginx
       PIMS_CACHE: pims_cache
       POSTGIS: postgis
+      REDIS: redis
 
   web_ui:
     constant:
@@ -52,11 +53,16 @@ global:
 
   cbir:
     constant:
-      HOST: pims-cache
-      DB: 1
+      HOST: redis
+      DB: 0
+
+  redis:
+    constant:
+      PORT: 6380
 
   container_paths:
     constant:
+      CBIR_DATA: /data
       IMAGES: /data/dev/images
       UPLOADED: /tmp/uploaded
 
@@ -105,6 +111,13 @@ services:
     bioformat:
       constant:
         BIOFORMAT_PORT: 4321
+
+    cbir:
+      global:
+        DATA_PATH: container_paths.CBIR_DATA
+        DB: cbir.DB
+        HOST: cbir.HOST
+        PORT: redis.PORT
 
     pims:
       constant:
