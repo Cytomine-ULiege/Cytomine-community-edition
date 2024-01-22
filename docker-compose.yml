@@ -57,6 +57,28 @@ services:
     container_name: rabbitmq
     restart: unless-stopped
 
+  cbir:
+    image: $IMAGES_CBIR
+    container_name: cbir
+    restart: unless-stopped
+    ports:
+      - "6000:6000"
+    volumes:
+      - $HOST_PATHS_CBIR_MODEL:/weights
+      - cbir_data:$CONTAINER_PATHS_CBIR_DATA
+    depends_on:
+      - redis
+
+  redis:
+    image: $IMAGES_PIMS_CACHE
+    container_name: redis
+    command: --port 6380
+    restart: unless-stopped
+    ports:
+      - "6380:6380"
+    volumes:
+      - redis_data:/data
+
   bioformat:
     image: $IMAGES_BIOFORMAT
     container_name: bioformat
