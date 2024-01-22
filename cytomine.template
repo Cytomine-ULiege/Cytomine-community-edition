@@ -9,6 +9,7 @@ global:
   images:
     constant:
       BIOFORMAT: cytomine/bioformat:v1.2.0
+      CBIR: cytomine/cbir:0.1.0-beta.1
       CORE: cytomineuliege/core:4.0.0-ms
       ELASTICSEARCH: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
       LOGSTASH: docker.elastic.co/logstash/logstash:8.6.2
