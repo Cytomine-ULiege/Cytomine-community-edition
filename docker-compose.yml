@@ -65,7 +65,7 @@ services:
       - "6000:6000"
     volumes:
       - $HOST_PATHS_CBIR_MODEL:/weights
-      - cbir_data:$CONTAINER_PATHS_CBIR_DATA
+      - ${HOST_PATHS_PROJECT_DATA_PATH}:$CONTAINER_PATHS_CBIR_DATA
     depends_on:
       - redis
 
@@ -77,7 +77,7 @@ services:
     ports:
       - "6380:6380"
     volumes:
-      - redis_data:/data
+      - ${HOST_PATHS_PROJECT_DATA_PATH}/redis/data:/data
 
   bioformat:
     image: $IMAGES_BIOFORMAT
