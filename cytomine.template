@@ -4,18 +4,21 @@
 global:
   urls:
     constant:
+      CBIR: cbir.cytomine.local
       CORE: cytomine.local
       IMAGE_SERVER: ims.cytomine.local
       UPLOAD: upload.cytomine.local
 
   urls_with_scheme:
     constant:
+      CBIR: http://cbir.cytomine.local
       CORE: http://cytomine.local
       IMAGE_SERVER: http://ims.cytomine.local
       UPLOAD: http://upload.cytomine.local
 
   host_paths:
       constant:
+        CBIR_MODEL: /code/weights
         PROJECT_DATA_PATH: ./data
 
   smtp:
@@ -35,6 +38,7 @@ global:
   images:
     constant:
       BIOFORMAT: cytomineuliege/bioformat:v3.1.0
+      CBIR: cytomineuliege/cbir:0.1.0
       CORE: cytomineuliege/core:4.0.0
       MONGO: mongo:4.4.18-focal
       NGINX: cytomineuliege/nginx:1.22.1-1.0.0
@@ -47,6 +51,7 @@ global:
   internal_docker_urls: # must match respective container hostnames from compose file
     constant: 
       WEB_UI: web_ui
+      CBIR: cbir:6000
       CORE: core:8080
       PIMS: pims:5000
       RABBITMQ: rabbitmq
@@ -55,9 +60,11 @@ global:
       NGINX: nginx
       PIMS_CACHE: pims_cache
       POSTGIS: postgis
+      REDIS: redis
 
   container_paths:
     constant:
+      CBIR_DATA: /data
       IMAGES: /data/images
       UPLOADED: /tmp/uploaded
 
@@ -89,6 +96,15 @@ global:
       PASS:
         type: openssl
         length: 32
+
+  cbir:
+    constant:
+      HOST: redis
+      DB: 0
+
+  redis:
+    constant:
+      PORT: 6380
 
   keys:
     auto:
@@ -173,6 +189,13 @@ services:
       constant:
         BIOFORMAT_PORT: 4321
 
+    cbir:
+      global:
+        DATA_PATH: container_paths.CBIR_DATA
+        DB: cbir.DB
+        HOST: cbir.HOST
+        PORT: redis.PORT
+
     pims:
       constant:
         WEB_CONCURRENCY: 16
@@ -210,8 +233,10 @@ services:
     nginx:
       global:
         INTERNAL_URLS_WEB_UI: internal_docker_urls.WEB_UI
+        INTERNAL_URLS_CBIR: internal_docker_urls.CBIR
         INTERNAL_URLS_CORE: internal_docker_urls.CORE
         INTERNAL_URLS_IMS: internal_docker_urls.PIMS
+        URLS_CBIR: urls.CBIR
         URLS_CORE: urls.CORE
         URLS_IMAGE_SERVER: urls.IMAGE_SERVER
         URLS_UPLOAD: urls.UPLOAD
@@ -221,6 +246,7 @@ services:
       constant:
         PROXY_HOSTNAME: nginx
       global:
+        URL_CBIR: urls.CBIR
         URL_CORE: urls.CORE
         URL_IMS1: urls.IMAGE_SERVER
         URL_UPLOAD: urls.UPLOAD
