@@ -224,6 +224,8 @@ services:
         POSTGRES_DB: postgres.DB_NAME
 
     nginx:
+      constant:
+        NGINX_LISTEN_PORT: 80
       global:
         INTERNAL_URLS_WEB_UI: internal_docker_urls.WEB_UI
         INTERNAL_URLS_CBIR: internal_docker_urls.CBIR
