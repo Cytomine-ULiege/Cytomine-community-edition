@@ -142,6 +142,7 @@ services:
       global:
         ELASTICSEARCH_HOST: internal_docker_urls.ELASTICSEARCH
         ELASTICSEARCH_PORT: elasticsearch.PORT
+        IMAGE_SERVER_CBIR: urls_with_scheme.CBIR
         IMAGE_SERVER_PRIVATE_KEY: keys.IMAGE_SERVER_PRIVATE
         IMAGE_SERVER_PUBLIC_KEY: keys.IMAGE_SERVER_PUBLIC
         POSTGIS_HOST: internal_docker_urls.POSTGIS
