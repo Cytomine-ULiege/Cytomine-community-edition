@@ -17,6 +17,7 @@ global:
   host_paths:
       constant:
         PROJECT_DATA_PATH: ./data
+        DATASET_PATH: ./dataset
 
   smtp:
     constant:
@@ -38,7 +39,7 @@ global:
       CORE: cytomineuliege/core:4.0.0
       MONGO: mongo:4.4.18-focal
       NGINX: cytomineuliege/nginx:1.22.1-1.0.0
-      PIMS: cytomineuliege/pims:0.13.0-community-plugins
+      PIMS: cytomineuliege/pims:0.14.0
       PIMS_CACHE: redis:7.0.8
       POSTGIS: cytomineuliege/postgis:15-3.3-alpine-1.0.0
       RABBITMQ: rabbitmq:3.10
@@ -58,6 +59,7 @@ global:
 
   container_paths:
     constant:
+      DATASET: /dataset
       IMAGES: /data/images
       UPLOADED: /tmp/uploaded
 
@@ -187,6 +189,7 @@ services:
         CYTOMINE_PUBLIC_KEY: keys.IMAGE_SERVER_PUBLIC
         CYTOMINE_PRIVATE_KEY: keys.IMAGE_SERVER_PRIVATE
         ROOT: container_paths.IMAGES
+        DATASET_PATH: container_paths.DATASET
         PENDING_PATH: container_paths.UPLOADED
         PIMS_URL: urls_with_scheme.IMAGE_SERVER
         REVERSE_PROXY_URL: internal_docker_urls.NGINX
