@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${HOST_PATHS_PROJECT_DATA_PATH}/images:$CONTAINER_PATHS_IMAGES
-  
+
   pims-cache:
     image: $IMAGES_PIMS_CACHE
     container_name: pims-cache
@@ -47,12 +47,13 @@ services:
     volumes:
       - ${HOST_PATHS_PROJECT_DATA_PATH}/images:$CONTAINER_PATHS_IMAGES
       - ${HOST_PATHS_PROJECT_DATA_PATH}/upload:$CONTAINER_PATHS_UPLOADED
+      - ${HOST_PATHS_DATASET_PATH}/dataset:$CONTAINER_PATHS_DATASET
     deploy:
       resources:
         # limits or reservations ?
         reservations:
           memory: 4G
-    
+
   core:
     image: $IMAGES_CORE
     container_name: core
@@ -82,7 +83,7 @@ services:
       - 80:80
     volumes:
       - ${HOST_PATHS_PROJECT_DATA_PATH}/upload:$CONTAINER_PATHS_UPLOADED
-  
+
   # to map nginx ip with urls to host's /etc/hosts
   etc_hosts_rewriter:
     image: alpine:latest
