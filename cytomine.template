@@ -93,6 +93,9 @@ global:
         length: 32
 
   keys:
+    constant:
+      CRYPT4GH_PUBLIC_KEY: crypt4gh_sender_public_key
+      CRYPT4GH_PRIVATE_KEY: crypt4gh_private_key
     auto:
       IMAGE_SERVER_PRIVATE: random_uuid
       IMAGE_SERVER_PUBLIC: random_uuid
@@ -186,6 +189,8 @@ services:
         task_queue_enabled: false
         cache_enabled: true
       global: 
+        CRYPT4GH_PUBLIC_KEY: keys.CRYPT4GH_PUBLIC_KEY
+        CRYPT4GH_PRIVATE_KEY: keys.CRYPT4GH_PRIVATE_KEY
         CYTOMINE_PUBLIC_KEY: keys.IMAGE_SERVER_PUBLIC
         CYTOMINE_PRIVATE_KEY: keys.IMAGE_SERVER_PRIVATE
         ROOT: container_paths.IMAGES
